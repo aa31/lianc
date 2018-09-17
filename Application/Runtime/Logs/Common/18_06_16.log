@@ -1,0 +1,12 @@
+[ 2018-06-16T01:32:22+08:00 ] 123.125.71.111 /robots.txt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000386s ]
+ERR: 无法加载模块:Robots
+
+[ 2018-06-16T12:00:10+08:00 ] 193.106.30.99 /temp.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000375s ]
+ERR: 无法加载模块:Temp
+

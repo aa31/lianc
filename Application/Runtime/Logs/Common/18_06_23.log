@@ -1,0 +1,12 @@
+[ 2018-06-23T01:35:16+08:00 ] 123.125.67.220 /robots.txt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000537s ]
+ERR: 无法加载模块:Robots
+
+[ 2018-06-23T19:23:20+08:00 ] 193.106.30.99 /cod.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000397s ]
+ERR: 无法加载模块:Cod
+

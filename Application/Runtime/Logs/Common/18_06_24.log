@@ -1,0 +1,12 @@
+[ 2018-06-24T01:35:25+08:00 ] 123.125.67.228 /robots.txt
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000430s ]
+ERR: 无法加载模块:Robots
+
+[ 2018-06-24T23:18:40+08:00 ] 193.106.30.99 /wp-sbb.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000456s ]
+ERR: 无法加载模块:Wp-sbb
+
