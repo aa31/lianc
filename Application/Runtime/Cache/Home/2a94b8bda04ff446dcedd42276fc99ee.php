@@ -43,7 +43,7 @@
 		    	height: 700px;
 		    }
 		    .item{
-		    	width: 1280px;
+		    	width: 100%;
 		    	margin: 0 auto;
 		    }
 		</style>
@@ -96,27 +96,11 @@
 		<section id='banner2'>
 			
 			<div id="myCarousel" class="carousel slide">
-			    <!-- 轮播（Carousel）指标 -->
-			    <ol class="carousel-indicators">
-			        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			        <li data-target="#myCarousel" data-slide-to="1"></li>
-			        <li data-target="#myCarousel" data-slide-to="2"></li>
-			    </ol>   
-			    <!-- 轮播（Carousel）项目 -->
-			    <div class="carousel-inner" style="background-color: #000;">
-			        <div class="item active">
-			        	<img src="http://cdn.sin028.com/lc/banner/banenr01.jpg" alt="" />
-			            <!--<img src="http://cdn.sin028.com/lc/banner/banenr01.jpg" alt="First slide">-->
-			            <!--<div class="carousel-caption">标题 1</div>-->
-			        </div>
-			        <div class="item">
-			            <img src="http://cdn.sin028.com/lc/banner/banner02.jpg" alt="Second slide">
-			            <!--<div class="carousel-caption">标题 2</div>-->
-			        </div>
-			        <div class="item">
-			            <img src="http://cdn.sin028.com/lc/banner/banner03.jpg" alt="Third slide">
-			            <!--<div class="carousel-caption">标题 3</div>-->
-			        </div>
+			    <div class="carousel-inner" style="background-color: #FCFCFC;">
+			    	
+			    	<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?><div class="item" data-id='<?php echo ($key); ?>'>
+			            	<img src="<?php echo ($data["banner_url"]); ?>">
+			        	</div><?php endforeach; endif; else: echo "" ;endif; ?>
 			    </div>
 			    <!-- 轮播（Carousel）导航 -->
 			    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -445,7 +429,7 @@
 							<h2 class="wow fadeInUp" data-wow-delay=".3s">公司视频</h2>
 							<!--<p class="wow fadeInUp" data-wow-delay=".5s">Dantes remained confused and silent by this explanation of the </p>-->
 							<!--<a href="https://vimeo.com/channels/staffpicks/145743834" class="html5lightbox" data-width=800 data-height=400>-->
-								<embed width="1000" height="600" src="//player.video.iqiyi.com/d1c3a699ddd23c5f66f7a59bac31966d/0/0/w_19s0v7sxeh.swf-albumId=22788488309-tvId=22788488309-isPurchase=0-cnId=undefined" allowFullScreen="true" quality="high" width="480" height="350" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+								<embed width="100%" height="600" src="//player.video.iqiyi.com/d1c3a699ddd23c5f66f7a59bac31966d/0/0/w_19s0v7sxeh.swf-albumId=22788488309-tvId=22788488309-isPurchase=0-cnId=undefined" allowFullScreen="true" quality="high" width="480" height="350" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
 								<!--<div class="button ion-ios-play-outline wow zoomIn" data-wow-delay=".3s"></div>-->
 							</a>
 						</div>
@@ -562,12 +546,18 @@
 						<div style="width:100%;height:550px;border:#ccc solid 1px;" id="dituContent"></div>
 					</div>
 					<div class="col-md-6">
-						<form>
-                            <input type="text" class="form-control" placeholder="姓名">
-                            <input type="text" class="form-control" placeholder="联系方式">
-                            <textarea class="form-control" rows="3" placeholder="留言内容"></textarea>
-                            <button class="btn btn-default" type="submit">提交</button>
+						<form id="upMsgFrom">
+                            <input type="text" class="form-control" placeholder="姓名" name="name" required="">
+                            <input type="text" class="form-control" placeholder="联系方式" name="phone">
+                            <textarea class="form-control" rows="3" placeholder="留言内容" name="content"></textarea>
+                            <button class="btn btn-default" id="upMsg" type="button">提交</button>
                         </form>
+                        
+                        
+                        <div style="margin-top: 10em;font-size: 1.25em;line-height: 1.75em;font-weight: 600;text-align: right;">
+                        	曹经理 13519088945   微信c13519088945<br />齐经理 13739381368   微信q13739381368
+                        </div>
+                        
 					</div>
 				</div>
 			</div>
@@ -578,7 +568,6 @@
 					<div class="col-md-12">
 						
 						<div class="pull-left">
-							曹经理 13519088945   微信c13519088945   <br />  齐经理 13739381368   微信q13739381368
 
 						</div>
 						
@@ -662,6 +651,39 @@
 		$('.carousel').carousel({
 			 interval: 3000
 		});
+		
+		
+		$('.item').each(function(){
+			var itemid = $(this).attr('data-id')
+			if( itemid == 0){
+				$(this).addClass('active')
+			}
+			
+		})
+		
+		
+		
+		$('#upMsg').click(function(){
+			$.ajax({ 
+			   url: "/index.php/Admin/Msg/PostUpMsg", 
+			   type: "POST", 
+			   data: $('#upMsgFrom').serialize(), 
+			   success: function(res) {  
+					var jsonObj = JSON.parse(res);
+	            	if(jsonObj.code==1001){
+	            		alert('留言成功');
+	            		$("#upMsgFrom").each(function(){
+							$(this).val('');
+						});
+	            	}else{
+	            		alert('失败');
+	            	}
+			   }, 
+			   error: function(data) {
+			   } 
+			});
+		})
+		
 	</script>
 	
 </html>

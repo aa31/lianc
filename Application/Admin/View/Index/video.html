@@ -1,0 +1,79 @@
+<extend name="./base" />
+<block name="title">{$Think.ACTION_NAME}</block>
+<block name="main">  
+	<main class="app-content">
+    	
+	<div class="app-title">
+	    <div>
+	      <h1>公司视频</h1>
+	    </div>
+    </div>
+    
+    <div class="col-lg-12 col-sm-12 col-xs-12" style="margin: 0 auto;">
+    	<div class="tile-body row">
+    		<div class="col-md-6">
+		          <div class="tile">
+		            <h3 class="tile-title">当前</h3>
+		            <div class="tile-body">
+		                <embed width="100%" src="{$list['video_url']}" allowFullScreen="true" quality="high" width="480" height="350" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"
+		            </div>
+		            <div class="tile-footer">
+		              <div class="row">
+		                <div class="col-md-12">
+		                	<h5>请先将视频上传至爱奇艺或者优酷将分享链接粘贴在右边即可</h5> 
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+	    	</div>
+	    </div>
+	    	<div class="col-md-6">
+		           <div class="tile">
+		            <h3 class="tile-title">更改</h3>
+		            <div class="tile-body">
+		              <form id="rmBannerFrom" action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
+		                <div class="form-group row">
+		                  <label class="control-label col-md-3">视频url</label>
+		                  <div class="col-md-8">
+		                  	<input id="reid" class="form-control" type="text" placeholder="" name='id' hidden="" value="{$list['id']}">
+		                    <input id="reurl" class="form-control" type="text" placeholder="复制视频地址" name='title'>
+		                  </div>
+		                </div>
+		              </form>
+		            </div>
+		            <div class="tile-footer">
+		              <div class="row">
+		                <div class="col-md-8 col-md-offset-3">
+		                  <button id="reVideo" class="btn btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>更改</button>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+	    	</div>
+	    	
+    	
+    </div>
+    </main>
+    
+</block>
+
+<block name='js'>
+	<script type="text/javascript">
+	    $('#reVideo').click(function(){
+	    	var urlstr = $('#reurl').val();
+	    	var reid = $('#reid').val();
+	    	
+	    	$.post('__MODULE__/Video/PostModifyVideo',{url:urlstr,id:reid},function(res){
+	    		var jsonObj = JSON.parse(res);
+            	if(jsonObj.code==1001){
+            		alert('成功');
+            		window.location.reload();
+            	}else{
+            		alert('失败');
+            	}
+	    	})
+	    })
+	    	
+	    	
+	</script>
+</block>

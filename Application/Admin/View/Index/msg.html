@@ -1,0 +1,79 @@
+<extend name="./base" />
+<block name="title">留言板</block>
+<block name="main">  
+	<main class="app-content">
+    	
+	<div class="app-title">
+	    <div>
+	      <h1>留言板</h1>
+	    </div>
+    </div>
+    
+    <div class="col-lg-12 col-sm-12 col-xs-12" style="margin: 0 auto;">
+    	<div class="tile-body row">
+    		<div class="col-md-12">
+		          <div class="tile">
+		            <h3 class="tile-title">列表</h3>
+		            <div class="tile-body">
+		            	
+		            	<table class="table">
+			              <thead>
+			                <tr>
+			                  <th>#</th>
+			                  <th>姓名</th>
+			                  <th>号码</th>
+			                  <th>内容</th>
+			                  <th>时间</th>
+			                  <th>操作</th>
+			                </tr>
+			              </thead>
+			              <tbody>
+			              	<volist name='list' id='list'>
+			              		<tr>
+			              		<td>{$key+1}</td>
+				                  <td>{$list.msg_name}</td>
+				                  <td>{$list.msg_content}</td>
+				                  <td>{$list.msg_phone}</td>
+				                  <td>{$list.msg_ctime|date='Y-m-d H:i:s',###}</td>
+				                  <td><button data-id='{$list.id}' class="btn btn-danger btn-sm rmMsg">删除</button></td>
+				                 </tr>
+			              	</volist>
+			              </tbody>
+			            </table>
+		            	
+		            </div>
+		            <div class="tile-footer">
+		              <div class="row">
+		                <div class="col-md-12"></div>
+		            </div>
+		          </div>
+		        </div>
+	    	</div>
+	    </div>
+	    	
+    	
+    </div>
+    </main>
+    
+</block>
+
+<block name='js'>
+	<script type="text/javascript">
+	    $('.rmMsg').click(function(){
+	    	var id = $(this).attr('data-id');
+	    	var _this = $(this);
+	    	$.post('__MODULE__/Msg/PostRemoveMsg',{id:id},function(res){
+	    		var jsonObj = JSON.parse(res);
+            	if(jsonObj.code==1001){
+            		alert('成功');
+            		_this.parents('tr').css('display','none');
+//          		$(this).parent('tr').css('color','red');
+            	}else{
+            		alert('失败');
+            	}
+	    	})
+	    })
+	    	
+	    	
+	</script>
+</block>

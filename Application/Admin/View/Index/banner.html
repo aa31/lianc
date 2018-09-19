@@ -1,0 +1,150 @@
+<extend name="./base" />
+<block name="title">轮播图管理</block>
+<block name="main">  
+	<main class="app-content">
+    	
+	<div class="app-title">
+	    <div>
+	      <h1>轮播图管理</h1>
+	    </div>
+    </div>
+    
+    <div class="col-lg-12 col-sm-12 col-xs-12" style="margin: 0 auto;">
+    	<div class="tile-body row">
+    		
+    		<div class="col-md-12">
+          		<div class="tile">
+          			<h3 class="tile-title">管理</h3>
+          			<table class="table">
+		              <thead>
+		                <tr>
+		                  <th>编号#</th>
+		                  <th>标题</th>
+		                  <th>图片</th>
+		                  <th>顺序</th>
+		                  <th>上传时间</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		              	
+		              	<volist name="list" id="data">
+	              		<tr>
+		                  <td>{$data.id}</td>
+		                  <td>{$data.banner_title}</td>
+		                  <td> <img height="50px" src="{$data.banner_url}"/> </td>
+		                  <td>{$data.banner_sort}</td>
+		                  <td>
+		                  {$data.banner_ctime|date='Y-m-d H:i:s',###}
+		                  </td>
+		                </tr>
+						</volist>
+						
+		              </tbody>
+		            </table>
+          		</div>
+    		</div>
+    		
+    		
+    		<div class="col-md-6">
+	          <div class="tile">
+	            <h3 class="tile-title">上传</h3>
+	            <div class="tile-body">
+	              <form id="upBannerFrom" action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
+	                <div class="form-group row">
+	                  <label class="control-label col-md-3">标题/描述</label>
+	                  <div class="col-md-8">
+	                    <input class="form-control" type="text" placeholder="随便写 用于区分" name='title'>
+	                  </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label class="control-label col-md-3">顺序</label>
+	                  <div class="col-md-8">
+	                    <input class="form-control col-md-8" type="text" placeholder="1优先级最高" name='sort'>
+	                  </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label class="control-label col-md-3">选择图片（1920*600）</label>
+	                  <div class="col-md-8">
+	                    <input name="url" class="form-control" type="file">
+	                  </div>
+	                </div>
+	              </form>
+	            </div>
+	            <div class="tile-footer">
+	              <div class="row">
+	                <div class="col-md-8 col-md-offset-3">
+	                  <button id="upBanner" class="btn btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>上传</button>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+    	</div>
+    	
+    	<div class="col-md-6">
+	          <div class="tile">
+	            <h3 class="tile-title">编号</h3>
+	            <div class="tile-body">
+	              <form id="rmBannerFrom" action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
+	                <div class="form-group row">
+	                  <label class="control-label col-md-3">编号</label>
+	                  <div class="col-md-8">
+	                    <input id="rmid" class="form-control" type="text" placeholder="填写编号" name='title'>
+	                  </div>
+	                </div>
+	              </form>
+	            </div>
+	            <div class="tile-footer">
+	              <div class="row">
+	                <div class="col-md-8 col-md-offset-3">
+	                  <button id="rmBanner" class="btn btn-danger" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>删除</button>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+    	
+    	
+   	 </div>
+    </main>
+</block>
+
+
+<block name='js'>
+	<script type="text/javascript">
+		 $('#upBanner').click(function(){
+		 	var form = document.getElementById('upBannerFrom');  
+		 	var data = new FormData(form);
+		 	$.ajax( {
+		            type : 'POST',
+		            url : '__MODULE__/Banner/PostUpload',
+		            data : data,
+		            contentType : false,// 告诉jQuery不要去设置Content-Type请求头
+	       			processData: false,// 告诉jQuery不要去处理发送的数据
+		            success : function(res) {
+		            	var jsonObj = JSON.parse(res);
+		            	if(jsonObj.code==1001){
+		            		alert('成功');
+		            		window.location.reload();
+		            	}else{
+		            		alert('失败');
+		            	}
+		            }
+	        	});
+	    	});
+	    	
+	    $('#rmBanner').click(function(){
+	    	var id = $('#rmid').val();
+	    	$.post('__MODULE__/Banner/PostRemoveBanner',{id:id},function(res){
+	    		var jsonObj = JSON.parse(res);
+            	if(jsonObj.code==1001){
+            		alert('成功');
+            		window.location.reload();
+            	}else{
+            		alert('失败');
+            	}
+	    	})
+	    })
+	    	
+	    	
+	</script>
+</block>
+
